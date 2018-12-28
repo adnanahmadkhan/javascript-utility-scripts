@@ -1,0 +1,4 @@
+var cursor = db.getCollection('users').find({}, {});
+while(cursor.hasNext()) {
+    print(tojson(cursor.next())+",")
+}
