@@ -1,0 +1,25 @@
+const request = require("request");
+
+export async function hitApiAsync(token: any, url: any, jsonObj: any, res: any) {
+    const report: Array<Object> = [];
+    for (const i in jsonObj) {
+        clean(jsonObj[i]);
+        const result = await new Promise((reject, resolve) => {
+            request.post({
+                headers: {
+                    "authorization": token
+                },
+                url: url,
+                json: jsonObj[i]
+            }, (res: any, err: Error) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res);
+                }
+            });
+        });
+        report.push(compileReport(result, jsonObj[i], parseInt(i) + 2));
+    }
+    res.send({report});
+}
