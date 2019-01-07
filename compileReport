@@ -1,0 +1,15 @@
+const compileReport = (res: any, json: any, index: any) => {
+    let message = res.body.error ? res.body.error : "Created";
+    message += " index: " + index + "\n\n";
+
+    for (const i in json)
+        message += i + " = " + json[i] + "\n";
+
+    const report = {
+        statusCode: res.statusCode,
+        statusMessage: res.statusMessage,
+        index: index,
+        data: message
+    };
+    return report;
+};
