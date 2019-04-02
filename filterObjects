@@ -1,0 +1,12 @@
+const filterObjects = (obj: any, predicate: any) =>
+    Object.keys(obj)
+          .filter( key => predicate(obj[key]) )
+          .reduce( (res: any, key: any) => (res[key] = obj[key], res), {} );
+          
+          
+          
+// Example use, remove undefined values from an object
+filterObjects({"key0": undefined, "key1": 123}, (element: any) => element != undefined);
+
+//returns {"key1": 123}
+
