@@ -1,0 +1,1 @@
+Math.ceil(((f < 1.0) ? f : (f % Math.floor(f))) * 10000)
