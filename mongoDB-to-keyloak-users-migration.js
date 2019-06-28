@@ -236,6 +236,10 @@ const transformUser = async (user) => {
     }
 }
 
+/**
+ * @function writeUserToFile
+ * this writes a user to a file
+ */
 const writeUserToFile = (user) => {
     const csvData = csvjson.toCSV(user, {
         headers: 'key'
@@ -250,15 +254,23 @@ const writeUserToFile = (user) => {
     });
 }
 
-
+/**
+ * @function readyUserForFile
+ * this function slices atributes from the created KC user and returns an object of it
+ */
 const readyUserForFile = (user) => {
     return {
         username: user.username,
         password: user.credentials[0].value,
-        email: user.email
+        email: user.email,
+        KCId: user.id
     }
 }
 
+/**
+ * @function addUserToGroup
+ * this function adds a user to a default KC group
+ */
 const addUserToGroup = async (id) => {
     const defaultGroup = await axiosInstance.get(`${KC_URI}/admin/realms/${REALM}/groups?groupId=default`, axiosConfig)
     const params = {"realm": REALM, "userId": id, "groupId": defaultGroup.data[0].id}
@@ -268,6 +280,14 @@ const addUserToGroup = async (id) => {
         console.log("Admin user added to default group")
         return true
     }
+}
+
+/**
+ * @function deleteUser
+ * this function deletes a user in KC
+ */
+const deleteUser = async (userId) => {
+    await axiosInstance.delete(`${KC_URI}/admin/realms/${REALM}/users/${userId}`, axiosConfig)
 }
 
 main();
